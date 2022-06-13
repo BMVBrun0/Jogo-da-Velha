@@ -1,0 +1,141 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(){
+
+    
+    int l, c, lin, col, jogador, ganhou, jogadas, opcao;
+    char matJogo[3][3]; //iniciada as variáveis 
+
+    do{ 
+        jogador = 1;
+        ganhou = 0;
+        jogadas = 0; //flags
+        
+        for(l = 0; l < 3; l++){
+            for(c = 0; c < 3; c++){
+                matJogo[l][c] = ' ';
+            }
+        }
+
+        do{ 
+            
+            printf("\n\n\t 0   1   2\n\n");
+            for(l = 0; l < 3; l++){
+                for(c = 0; c < 3; c++){
+                    if(c == 0)
+                        printf("\t");
+                    printf(" %c ", matJogo[l][c]);
+                    if(c < 2)
+                        printf("|");
+                    if(c == 2)
+                        printf("  %d", l);
+                }
+                if(l < 2)
+                    printf("\n\t-----------");
+                printf("\n");
+            }
+
+        
+            do{
+                printf("\n\JOGADOR 1 = 0\nJOGADOR 2 = X\n");
+                printf("\nJOGADOR %d: Digite a linha e a coluna que deseja jogar: ", jogador);
+                scanf("%d%d", &lin, &col);
+                while(lin>2 || col>2 ||lin<0||col<0){
+                    printf("Posição inválida: ");
+                    printf("\nJOGADOR %d: Digite a linha e a coluna que deseja jogar: ", jogador);
+                    scanf("%d%d", &lin, &col);
+                }
+            }while(lin < 0 || lin > 2 || col < 0 || col > 2 || matJogo[lin][col] != ' ');
+
+        
+            if(jogador == 1){
+                matJogo[lin][col] = '0';
+                jogador++;
+            }
+            else{
+                matJogo[lin][col] = 'X';
+                jogador = 1;
+            }
+            jogadas++;
+
+        
+            if(matJogo[0][0] == '0' && matJogo[0][1] == '0' && matJogo[0][2] == '0' ||
+               matJogo[1][0] == '0' && matJogo[1][1] == '0' && matJogo[1][2] == '0' ||
+               matJogo[2][0] == '0' && matJogo[2][1] == '0' && matJogo[2][2] == '0'){
+                printf("\nVitória do jogador 1\n");
+                ganhou = 1;
+            }
+
+            if(matJogo[0][0] == 'X' && matJogo[0][1] == 'X' && matJogo[0][2] == 'X' ||
+               matJogo[1][0] == 'X' && matJogo[1][1] == 'X' && matJogo[1][2] == 'X' ||
+               matJogo[2][0] == 'X' && matJogo[2][1] == 'X' && matJogo[2][2] == 'X'){
+                printf("\nVitória do jogador 2\n");
+                ganhou = 1;
+            }
+
+        
+            if(matJogo[0][0] == '0' && matJogo[1][0] == '0' && matJogo[2][0] == '0' ||
+               matJogo[0][1] == '0' && matJogo[1][1] == '0' && matJogo[2][1] == '0' ||
+               matJogo[0][2] == '0' && matJogo[1][2] == '0' && matJogo[2][2] == '0'){
+                printf("\nVitória do jogador 1\n");
+                ganhou = 1;
+            }
+
+            if(matJogo[0][0] == 'X' && matJogo[1][0] == 'X' && matJogo[2][0] == 'X' ||
+               matJogo[0][1] == 'X' && matJogo[1][1] == 'X' && matJogo[2][1] == 'X' ||
+               matJogo[0][2] == 'X' && matJogo[1][2] == 'X' && matJogo[2][2] == 'X'){
+                printf("\nVitória do jogador 2\n");
+                ganhou = 1;
+            }
+
+        
+            if(matJogo[0][0] == '0' && matJogo[1][1] == '0' && matJogo[2][2] == '0'){
+                printf("\nVitória do jogador 1\n");
+                ganhou = 1;
+            }
+
+            if(matJogo[0][0] == 'X' && matJogo[1][1] == 'X' && matJogo[2][2] == 'X'){
+                printf("\nVitória do jogador 2\n");
+                ganhou = 1;
+            }
+
+        
+            if(matJogo[0][2] == '0' && matJogo[1][1] == '0' && matJogo[2][0] == '0'){
+                printf("\nVitória do jogador 1\n");
+                ganhou = 1;
+            }
+
+            if(matJogo[0][2] == 'X' && matJogo[1][1] == 'X' && matJogo[2][0] == 'X'){
+                printf("\nVitória do jogador 2\n");
+                ganhou = 1;
+            }
+        }while(ganhou == 0 && jogadas < 9);
+
+        
+        printf("\n\n\t 0   1   2\n\n");
+        for(l = 0; l < 3; l++){
+            for(c = 0; c < 3; c++){
+                if(c == 0)
+                    printf("\t");
+                printf(" %c ", matJogo[l][c]);
+                if(c < 2)
+                    printf("|");
+                if(c == 2)
+                    printf("  %d", l);
+            }
+            if(l < 2)
+                printf("\n\t-----------");
+            printf("\n");
+        }
+
+        if(ganhou == 0)
+            printf("\nDeu Velha!\n");
+
+        printf("\nDigite 1 para jogar novamente: \n");
+        scanf("%d", &opcao);
+    }while(opcao == 1);
+
+    return 0;
+}
+
